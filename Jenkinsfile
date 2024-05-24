@@ -60,11 +60,9 @@ pipeline {
       //    }
       //   }
         stage('Image Scanning with Prisma Cloud') {
-            steps {
                 sh "curl -k -u ${PRISMA_ACCESS_KEY}:${PRISMA_SECRET_KEY} --output twistcli ${PCC_CONSOLE_URL}/api/v1/util/twistcli"
                 sh "chmod a+x twistcli"
                 sh "./twistcli images scan --address ${PCC_CONSOLE_URL} -u ${PRISMA_ACCESS_KEY} -p ${PRISMA_SECRET_KEY} --details ${CONTAINER_NAME}:${env.BUILD_ID}"
-            }
         }      
         stage('Server Deploy') {
             steps {
