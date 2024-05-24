@@ -59,6 +59,13 @@ pipeline {
       //       }
       //    }
       //   }
+        stage('Image Scanning with Prisma Cloud') {
+            steps {
+                sh "curl -k -u ${PRISMA_API_KEY}:${PRISMA_API_SECRET} --output twistcli ${PRISMA_COMPUTE_URL}/api/v1/util/twistcli"
+                sh "chmod a+x twistcli"
+                sh "./twistcli images scan --address ${PRISMA_COMPUTE_URL} -u ${PRISMA_API_KEY} -p ${PRISMA_API_SECRET} --details ${APP_NAME}:${env.BUILD_ID}"
+            }
+        }      
         stage('Server Deploy') {
             steps {
                 withAWS(credentials: 'aws-cred', region: 'us-east-1') {
