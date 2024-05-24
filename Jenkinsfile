@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        PRISMA_API_URL="${PRISMA_API_URL}"
+        PRISMA_API_URL="${PCC_CONSOLE_URL}"
     }
     
     stages {
